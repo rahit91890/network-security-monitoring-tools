@@ -1,0 +1,220 @@
+/* Network Security Monitoring Dashboard Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #333;
+    line-height: 1.6;
+}
+
+.dashboard-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-header h1 {
+    font-size: 1.8rem;
+    color: #1e3c72;
+}
+
+.header-info {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.status-indicator {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.status-indicator.active {
+    background: #10b981;
+    color: white;
+}
+
+.dashboard-nav {
+    background: white;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.nav-link {
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #1e3c72;
+    border-bottom-color: #1e3c72;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-left: 4px solid #ccc;
+}
+
+.stat-card.critical { border-left-color: #ef4444; }
+.stat-card.high { border-left-color: #f59e0b; }
+.stat-card.medium { border-left-color: #3b82f6; }
+.stat-card.low { border-left-color: #10b981; }
+
+.stat-card h3 {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.alerts-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.alerts-section h2 {
+    margin-bottom: 1.5rem;
+    color: #1e3c72;
+}
+
+.alerts-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.alerts-table th {
+    text-align: left;
+    padding: 1rem;
+    background: #f3f4f6;
+    font-weight: 600;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.alerts-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge.critical { background: #fee2e2; color: #991b1b; }
+.badge.high { background: #fed7aa; color: #92400e; }
+.badge.medium { background: #dbeafe; color: #1e40af; }
+.badge.low { background: #d1fae5; color: #065f46; }
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    background: #1e3c72;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.btn-small:hover {
+    background: #2a5298;
+}
+
+.charts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.chart-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.chart-container h3 {
+    margin-bottom: 1rem;
+    color: #1e3c72;
+}
+
+.chart-placeholder {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+    border-radius: 8px;
+    color: #9ca3af;
+}
+
+.dashboard-footer {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    color: #666;
+    margin-top: auto;
+}
+
+.dashboard-footer a {
+    color: #1e3c72;
+    text-decoration: none;
+}
+
+.dashboard-footer a:hover {
+    text-decoration: underline;
+}
