@@ -1,0 +1,190 @@
+# Network Security Monitoring Tools Configuration
+# YAML configuration file for NIDS, SIEM, and Threat Intelligence integration
+
+# ============ Network Configuration ============
+network:
+  # Network interface to monitor (e.g., eth0, wlan0, en0)
+  interface: "eth0"
+  
+  # Promiscuous mode (capture all packets, not just those destined for this host)
+  promiscuous_mode: true
+  
+  # Packet buffer size
+  packet_buffer_size: 1000
+  
+  # Traffic capture filters (BPF syntax)
+  capture_filter: ""
+
+# ============ Machine Learning Configuration ============
+ml_models:
+  # Anomaly detection model settings
+  anomaly_detection:
+    model_type: "IsolationForest"
+    contamination: 0.1
+    n_estimators: 100
+    model_path: "models/anomaly_detector.pkl"
+    
+  # Signature-based detection settings
+  signature_detection:
+    model_type: "RandomForest"
+    n_estimators: 100
+    max_depth: 10
+    model_path: "models/signature_detector.pkl"
+  
+  # Detection thresholds
+  thresholds:
+    anomaly_score: 0.7
+    signature_confidence: 0.8
+    
+  # Auto-retrain settings
+  auto_retrain:
+    enabled: false
+    interval_hours: 168  # Weekly
+
+# ============ Signature Rules Configuration ============
+signature_rules:
+  # YARA rules file path
+  yara_rules_path: "rules/signatures.yar"
+  
+  # Snort rules (if using Snort integration)
+  snort_rules_path: "rules/snort.rules"
+  
+  # Custom rule sets
+  custom_rules:
+    - "rules/custom_web.yar"
+    - "rules/custom_malware.yar"
+
+# ============ SIEM Integration ============
+siem:
+  # Enable SIEM forwarding
+  enabled: true
+  
+  # SIEM platform type (elasticsearch, graylog, splunk)
+  platform: "elasticsearch"
+  
+  # Elasticsearch configuration
+  elasticsearch:
+    hosts:
+      - "http://localhost:9200"
+    index_name: "nids-events"
+    username: "elastic"
+    password: "changeme"  # Change in production!
+    
+  # Graylog configuration
+  graylog:
+    host: "localhost"
+    port: 12201
+    protocol: "udp"
+    
+  # Event forwarding settings
+  forwarding:
+    batch_size: 100
+    flush_interval_seconds: 30
+
+# ============ Threat Intelligence Feeds ============
+threat_intelligence:
+  # Enable threat intel integration
+  enabled: true
+  
+  # AlienVault OTX
+  otx:
+    enabled: true
+    api_key: "YOUR_OTX_API_KEY_HERE"
+    update_interval_hours: 6
+    
+  # MISP (Malware Information Sharing Platform)
+  misp:
+    enabled: false
+    url: "https://misp.example.com"
+    api_key: "YOUR_MISP_API_KEY_HERE"
+    verify_ssl: true
+    
+  # Custom threat feeds
+  custom_feeds:
+    - url: "https://example.com/threat-feed.json"
+      type: "json"
+      update_interval_hours: 12
+
+# ============ Dashboard Configuration ============
+dashboard:
+  # Flask server settings
+  host: "0.0.0.0"
+  port: 5000
+  debug: false  # Set to false in production!
+  secret_key: "change-this-secret-key-in-production"
+  
+  # API rate limiting
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+    
+  # WebSocket settings (for real-time updates)
+  websocket:
+    enabled: false
+    port: 5001
+
+# ============ Incident Response ============
+incident_response:
+  # Auto-block suspicious IPs
+  auto_block:
+    enabled: false
+    threshold_score: 0.9
+    block_duration_minutes: 60
+    
+  # Alert notifications
+  notifications:
+    email:
+      enabled: false
+      smtp_server: "smtp.example.com"
+      smtp_port: 587
+      from_address: "nids@example.com"
+      to_addresses:
+        - "security@example.com"
+    
+    slack:
+      enabled: false
+      webhook_url: "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+
+# ============ Logging Configuration ============
+logging:
+  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+  level: "INFO"
+  
+  # Log file paths
+  files:
+    main_log: "logs/nids.log"
+    threat_log: "logs/threats.log"
+    error_log: "logs/errors.log"
+    
+  # Log rotation
+  rotation:
+    max_bytes: 10485760  # 10MB
+    backup_count: 5
+
+# ============ Performance Tuning ============
+performance:
+  # Worker threads for packet processing
+  worker_threads: 4
+  
+  # Queue sizes
+  packet_queue_size: 10000
+  alert_queue_size: 1000
+  
+  # Memory limits
+  max_memory_mb: 2048
+
+# ============ Zero Trust Configuration ============
+zero_trust:
+  enabled: false
+  trust_threshold: 70
+  auth_interval_seconds: 300
+  
+  # Microsegmentation rules
+  microsegments:
+    dmz:
+      allowed_sources: ["10.0.1.0/24"]
+      allowed_destinations: ["10.0.2.0/24"]
+    
+    internal:
+      allowed_sources: ["192.168.0.0/16"]
+      allowed_destinations: ["192.168.0.0/16"]
