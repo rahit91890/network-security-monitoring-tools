@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Security Monitoring Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>🛡️ Network Security Monitoring</h1>
+            <div class="header-info">
+                <span class="status-indicator active">● System Active</span>
+                <span class="timestamp">Last Updated: <span id="last-update"></span></span>
+            </div>
+        </header>
+
+        <nav class="dashboard-nav">
+            <a href="/" class="nav-link active">Dashboard</a>
+            <a href="/alerts" class="nav-link">Alerts</a>
+            <a href="/analytics" class="nav-link">Analytics</a>
+            <a href="/settings" class="nav-link">Settings</a>
+        </nav>
+
+        <main class="dashboard-content">
+            <section class="stats-grid">
+                <div class="stat-card critical">
+                    <h3>Critical Threats</h3>
+                    <div class="stat-value">{{ threat_summary.critical }}</div>
+                    <p class="stat-label">Requires Immediate Action</p>
+                </div>
+                <div class="stat-card high">
+                    <h3>High Priority</h3>
+                    <div class="stat-value">{{ threat_summary.high }}</div>
+                    <p class="stat-label">Monitor Closely</p>
+                </div>
+                <div class="stat-card medium">
+                    <h3>Medium Priority</h3>
+                    <div class="stat-value">{{ threat_summary.medium }}</div>
+                    <p class="stat-label">Review Recommended</p>
+                </div>
+                <div class="stat-card low">
+                    <h3>Low Priority</h3>
+                    <div class="stat-value">{{ threat_summary.low }}</div>
+                    <p class="stat-label">Informational</p>
+                </div>
+            </section>
+
+            <section class="alerts-section">
+                <h2>Recent Security Alerts</h2>
+                <div class="alerts-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Severity</th>
+                                <th>Type</th>
+                                <th>Source IP</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for alert in recent_alerts %}
+                            <tr class="alert-row {{ alert.severity }}">
+                                <td>{{ alert.time }}</td>
+                                <td><span class="badge {{ alert.severity }}">{{ alert.severity|upper }}</span></td>
+                                <td>{{ alert.type }}</td>
+                                <td>{{ alert.source }}</td>
+                                <td><button class="btn-small">Investigate</button></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="charts-section">
+                <div class="chart-container">
+                    <h3>Network Traffic (24h)</h3>
+                    <div id="traffic-chart" class="chart-placeholder">
+                        <p>Traffic visualization will be displayed here</p>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>Threat Distribution</h3>
+                    <div id="threat-chart" class="chart-placeholder">
+                        <p>Threat type distribution will be displayed here</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2025 Network Security Monitoring Tools | <a href="https://github.com/rahit91890/network-security-monitoring-tools">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Update timestamp
+        document.getElementById('last-update').textContent = new Date().toLocaleString();
+        
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>
